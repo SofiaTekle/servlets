@@ -15,27 +15,35 @@ public class HelloServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         resp.setContentType("text/html;charset=UTF-8");
 
-        String path = req.getPathInfo();
-        String name = (path != null && path.length() > 1) ? path.substring(1) : "världen";
 
+        /*
+         * 1) Försök hämta namn från query parameter
+         *    Ex: /hello?name=Sofia
+         */
+        String name = req.getParameter("name");
+
+        /*
+         * 2) Om inget namn skickats via formulär:
+         *    försök hämta från URL-path
+         *    Ex: /hello/Sofia
+         */
+        if (name == null || name.isBlank()) {
+            String path = req.getPathInfo();
+            if (path != null && path.length() > 1) {
+                name = path.substring(1); // ta bort "/"
+            } else {
+                name = "världen"; // default
+            }
+        }
+
+        // Skapa Thymeleaf-context och skicka med variabeln
         WebContext ctx = new WebContext(req, resp, req.getServletContext());
         ctx.setVariable("name", name);
 
+        // Rendera hello.html
         ThymeleafConfig.getEngine().process("hello", ctx, resp.getWriter());
 
 
 
-        // Två sätt att ta emot "name" från URL:
-        // 1) Query parameter: /hello?name=Sofia
-
-        //  String name = req.getParameter("name");
-        //  resp.getWriter().println("Hej " + name);
-
-        // 2) Path-parameter:   /hello/Sofia (utan ?)
-        // kolla om värdet finns och ta bort / från värdet
-//        String path = req.getPathInfo();
-//        String name = (path != null && path.length() > 1) ? path.substring(1) : "";
-//
-//        resp.getWriter().println("Hej " + name);
     }
 }
