@@ -28,16 +28,20 @@ The project demonstrates how to set up a lightweight web server, handle HTTP req
 ---
 
 ## Project Structure
-´´´
 
+´´´
 se.iths.sofia
 ├── Main.java # Starts the Jetty server and registers servlets
+
 ├── RootServlet.java # Handles requests to the root path "/"
+
 ├── HelloServlet.java # Handles requests to "/hello" and "/hello/*"
+
 ├── ThymeleafConfig.java # Configures Thymeleaf template engine
+
 └── resources
+
 ├── templates # HTML templates (index.html, hello.html)
+
 └── static # Optional static files (CSS, JS)
-
-
 ´´´
