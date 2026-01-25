@@ -28,9 +28,8 @@ The project demonstrates how to set up a lightweight web server, handle HTTP req
 ---
 
 ## Project Structure
-
-´´´
 se.iths.sofia
+´´´
 ├── Main.java # Starts the Jetty server and registers servlets
 
 ├── RootServlet.java # Handles requests to the root path "/"
